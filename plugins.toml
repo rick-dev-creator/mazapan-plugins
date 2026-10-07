@@ -14,8 +14,8 @@ commit = "8389e6db4efdc45e8fd7ed05f577fc7206baca27"
 [[plugin]]
 id = "now-playing"
 source = "https://github.com/rick-dev-creator/mazapan-now-playing"
-ref = "v0.1.1"
-commit = "16b0a356a728a543a495171aec75a0f41e2fbeeb"
+ref = "v0.1.2"
+commit = "2a4f4c7441b8dee0e9adb836f781f484d59e6a9f"
 
 [[plugin]]
 id = "pomodoro"

@@ -1,7 +1,7 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T10:40:29+00:00
+# 2026-10-07T10:50:49+00:00
 
 [[plugin]]
 id = "markets"
@@ -30,9 +30,9 @@ name = "Now Playing"
 description = "What's playing, wherever it plays: Spotify, YouTube in a browser, mpv… in the bar, the Control Center and a panel with every player, the cover's colors, a bar to drag through the song and the sound drawn as it plays"
 author = "RickDev"
 source = "https://github.com/rick-dev-creator/mazapan-now-playing"
-ref = "v0.1.1"
-commit = "16b0a356a728a543a495171aec75a0f41e2fbeeb"
-version = "0.1.1"
+ref = "v0.1.2"
+commit = "2a4f4c7441b8dee0e9adb836f781f484d59e6a9f"
+version = "0.1.2"
 license = "MIT"
 homepage = "https://github.com/rick-dev-creator/mazapan-now-playing"
 categories = ["panel", "bar"]
