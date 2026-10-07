@@ -1,7 +1,28 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T14:11:32+00:00
+# 2026-10-07T17:06:27+00:00
+
+[[plugin]]
+id = "dock"
+name = "Dock"
+description = "Your apps at the bottom of the screen: the ones you keep there and the ones open, a mark for each window, the window found wherever it is on the strip, and every window of an app live to pick one"
+author = "rickdev"
+source = "https://github.com/rick-dev-creator/mazapan-dock"
+ref = "v0.1.0"
+commit = "59d6eacee04fac2300b3015d1379caebf200fc7b"
+version = "0.1.0"
+license = "MIT"
+homepage = "https://github.com/rick-dev-creator/mazapan-dock"
+categories = ["panel", "window"]
+translations.de.name = "Dock"
+translations.de.description = "Deine Apps unten am Bildschirm: die, die du dort behältst, und die offenen, eine Markierung pro Fenster, das Fenster gefunden, wo auch immer es auf dem Streifen ist, und alle Fenster einer App live zur Auswahl"
+translations.es.name = "Dock"
+translations.es.description = "Tus apps abajo de la pantalla: las que dejas ahí y las abiertas, una marca por cada ventana, la ventana encontrada esté donde esté en la tira, y todas las ventanas de una app en vivo para elegir una"
+translations.fr.name = "Dock"
+translations.fr.description = "Vos apps en bas de l'écran : celles que vous y gardez et celles ouvertes, une marque par fenêtre, la fenêtre retrouvée où qu'elle soit sur la bande, et toutes les fenêtres d'une app en direct pour en choisir une"
+translations.pt.name = "Dock"
+translations.pt.description = "Seus apps embaixo da tela: os que você deixa ali e os abertos, uma marca para cada janela, a janela encontrada onde quer que esteja na faixa, e todas as janelas de um app ao vivo para escolher uma"
 
 [[plugin]]
 id = "markets"
