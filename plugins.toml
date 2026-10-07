@@ -8,8 +8,8 @@
 [[plugin]]
 id = "dock"
 source = "https://github.com/rick-dev-creator/mazapan-dock"
-ref = "v0.2.0"
-commit = "3d7b021bed23cf75cc9e8be1206f6ad53c922bec"
+ref = "v0.3.0"
+commit = "6ea5ef087fdd212fe5aab2613c635e8ed11d4da0"
 
 [[plugin]]
 id = "markets"

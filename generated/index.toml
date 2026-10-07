@@ -1,7 +1,7 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T22:42:58+00:00
+# 2026-10-07T22:57:28+00:00
 
 [[plugin]]
 id = "dock"
@@ -9,9 +9,9 @@ name = "Dock"
 description = "Your apps at the bottom of the screen: the ones you keep there and the ones open, a mark for each window, the window found wherever it is on the strip, and every window of an app live to pick one"
 author = "rickdev"
 source = "https://github.com/rick-dev-creator/mazapan-dock"
-ref = "v0.2.0"
-commit = "3d7b021bed23cf75cc9e8be1206f6ad53c922bec"
-version = "0.2.0"
+ref = "v0.3.0"
+commit = "6ea5ef087fdd212fe5aab2613c635e8ed11d4da0"
+version = "0.3.0"
 license = "MIT"
 homepage = "https://github.com/rick-dev-creator/mazapan-dock"
 categories = ["panel", "window"]
