@@ -42,6 +42,9 @@ jobs:
           git config --global --add safe.directory "$PWD"
           git config --global user.name "mazapan-registry[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # The checkout is main as it was when this run was asked for; a
+          # Publish that ran before it (they take turns) may have pushed since.
+          git pull --quiet --rebase origin main
           python tools/registry.py bump --summary /tmp/bump.json
           cat /tmp/bump.json
           # Listed at once: the list and what's generated from it, together.
