@@ -51,24 +51,4 @@ jobs:
             git push --quiet origin HEAD:main
           fi
           # Wanting more: a pull request each, unless there's one already.
-          python - <<'PY'
-          import json, subprocess, sys
-          sys.path.insert(0, "tools")
-          import registry
-          for p in json.load(open("/tmp/bump.json"))["proposals"]:
-              branch = f"bump/{p['id']}-{p['ref']}"
-              if subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True).returncode == 0:
-                  print(f"{branch}: already proposed")
-                  continue
-              subprocess.run(["git", "checkout", "--quiet", "-B", branch, "origin/main"], check=True)
-              text = open("plugins.toml").read()
-              open("plugins.toml", "w").write(registry.set_entry(text, p["id"], p["ref"], p["commit"]))
-              subprocess.run(["git", "commit", "--quiet", "-am", f"{p['id']} {p['ref']}: wants to do more"], check=True)
-              subprocess.run(["git", "push", "--quiet", "origin", branch], check=True)
-              body = (f"{p['id']} {p['version']} is out, and it would be able to do more than the version listed:\n\n"
-                      + "".join(f"- {c}\n" for c in p["more"])
-                      + "\nLook at what changed in its repository before merging: people who have it installed are asked "
-                        "to approve this when they update, but listing it is the registry vouching that it's what it says.")
-              subprocess.run(["gh", "pr", "create", "--head", branch, "--base", "main",
-                              "--title", f"{p['id']} {p['ref']}: wants to do more", "--body", body], check=True)
-          PY
+          python tools/registry.py propose /tmp/bump.json

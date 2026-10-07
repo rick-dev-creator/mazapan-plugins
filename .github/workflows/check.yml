@@ -55,6 +55,13 @@ jobs:
           )
           echo "entries=${entries:-none}" >> "$GITHUB_OUTPUT"
           echo "${entries:-nothing listed changed}"
+      - name: The registry's own tests
+        if: steps.changed.outputs.entries == ''
+        shell: bash
+        run: |
+          useradd -m tester 2>/dev/null || true
+          chown -R tester: "$PWD"
+          sudo -u tester env MAZAPAN="$MAZAPAN" MAZAPAN_ROOT="$MAZAPAN_ROOT" python tools/test_registry.py
       - name: Check
         if: steps.changed.outputs.entries != 'none'
         shell: bash

@@ -28,8 +28,10 @@ import tempfile
 import tomllib
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LIST = os.path.join(HERE, "plugins.toml")
-OUT = os.path.join(HERE, "generated")
+LIST = os.environ.get("REGISTRY_LIST") or os.path.join(HERE, "plugins.toml")
+OUT = os.environ.get("REGISTRY_OUT") or os.path.join(HERE, "generated")
+# Tests list repositories in folders of their own; the registry never does.
+LOCAL = os.environ.get("REGISTRY_LOCAL_SOURCES") == "1"
 
 ID = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}\Z")
 COMMIT = re.compile(r"^[0-9a-f]{40}\Z")
@@ -67,7 +69,7 @@ def load(path=LIST):
         if e["id"] in seen:
             raise Problem(f"{where}: listed twice")
         seen.add(e["id"])
-        if not SOURCE.match(e["source"]) or e["source"].endswith(".git"):
+        if not (SOURCE.match(e["source"]) or (LOCAL and e["source"].startswith("/"))) or e["source"].endswith(".git"):
             raise Problem(f"{where}: source: the repository's https address (https://github.com/you/mazapan-hello)")
         if not TAG.match(e["ref"]):
             raise Problem(f"{where}: ref: a version's tag, vX.Y.Z")
@@ -404,6 +406,35 @@ def cmd_bump(args):
     return 0
 
 
+def propose(summary):
+    """A pull request for each version that wants to do more, unless there's one already (gh, in the registry's checkout)."""
+    for p in summary["proposals"]:
+        branch = f"bump/{p['id']}-{p['ref']}"
+        if subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True).returncode == 0:
+            print(f"{branch}: already proposed")
+            continue
+        subprocess.run(["git", "checkout", "--quiet", "-B", branch, "origin/main"], check=True)
+        with open(LIST) as f:
+            text = f.read()
+        with open(LIST, "w") as f:
+            f.write(set_entry(text, p["id"], p["ref"], p["commit"]))
+        subprocess.run(["git", "commit", "--quiet", "-am", f"{p['id']} {p['ref']}: wants to do more"], check=True)
+        subprocess.run(["git", "push", "--quiet", "origin", branch], check=True)
+        body = (f"{p['id']} {p['version']} is out, and it would be able to do more than the version listed:\n\n"
+                + "".join(f"- {c}\n" for c in p["more"])
+                + "\nLook at what changed in its repository before merging: people who have it installed are asked "
+                  "to approve this when they update, but listing it is the registry vouching that it's what it says.")
+        subprocess.run(["gh", "pr", "create", "--head", branch, "--base", "main",
+                        "--title", f"{p['id']} {p['ref']}: wants to do more", "--body", body], check=True)
+        subprocess.run(["git", "checkout", "--quiet", "main"], check=True)
+
+
+def cmd_propose(args):
+    with open(args.summary) as f:
+        propose(json.load(f))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -412,9 +443,11 @@ def main():
     sub.add_parser("build")
     b = sub.add_parser("bump")
     b.add_argument("--summary", help="write what was done here, as JSON")
+    pr = sub.add_parser("propose")
+    pr.add_argument("summary", help="what bump wrote (--summary)")
     args = ap.parse_args()
     try:
-        return {"check": cmd_check, "build": cmd_build, "bump": cmd_bump}[args.cmd](args)
+        return {"check": cmd_check, "build": cmd_build, "bump": cmd_bump, "propose": cmd_propose}[args.cmd](args)
     except Problem as p:
         print(f"✗ {p}")
         return 1
