@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+<rect width="40" height="40" rx="7" fill="#171a1f"/>
+<rect x="1" y="1" width="38" height="38" rx="6.2" fill="none" stroke="#ffffff" stroke-opacity=".12" stroke-width="1"/>
+<rect x="7" y="8" width="11" height="11" rx="1.5" fill="none" stroke="#c9a15b" stroke-width="1.6"/>
+<path d="M11 11.2 v4.6 l3.9 -2.3 z" fill="#c9a15b"/>
+<rect x="21" y="10.5" width="12" height="1.8" rx=".9" fill="#e6e1d6"/>
+<rect x="21" y="15" width="8" height="1.8" rx=".9" fill="#e6e1d6" fill-opacity=".5"/>
+<rect x="7" y="24" width="26" height="1.6" rx=".8" fill="#ffffff" fill-opacity=".14"/>
+<rect x="7" y="24" width="15" height="1.6" rx=".8" fill="#c9a15b"/>
+<g fill="#c9a15b"><rect x="7" y="30.5" width="2" height="3"/><rect x="10.5" y="29" width="2" height="4.5"/><rect x="14" y="28" width="2" height="5.5"/><rect x="17.5" y="29.5" width="2" height="4"/><rect x="21" y="27.5" width="2" height="6"/><rect x="24.5" y="30" width="2" height="3.5"/><rect x="28" y="28.5" width="2" height="5"/><rect x="31.5" y="31" width="1.5" height="2.5"/></g>
+</svg>

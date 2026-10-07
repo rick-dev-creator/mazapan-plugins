@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07T10:50:49+00:00",
+ "generated": "2026-10-07T12:39:51+00:00",
  "plugins": [
   {
    "id": "markets",
@@ -189,6 +189,105 @@
    ],
    "added": "2026-10-07T10:40:29+00:00",
    "updated": "2026-10-07T10:50:49+00:00"
+  },
+  {
+   "id": "playback",
+   "name": "Playback",
+   "description": "What's playing, in Mazapan's own look: Spotify, YouTube in a browser, mpv… in the bar, the Control Center and a compact panel in the theme's colors, with every player, a bar to drag through the song and the sound drawn as it plays",
+   "version": "0.1.0",
+   "author": "RickDev",
+   "owner": {
+    "id": 81363560,
+    "login": "rick-dev-creator",
+    "name": "RickDev",
+    "bio": "Software Architect with 16+ of experience building enterprise apps.",
+    "company": "",
+    "blog": "",
+    "location": "",
+    "html_url": "https://github.com/rick-dev-creator",
+    "created_at": "2021-03-25T11:39:42Z",
+    "type": "User",
+    "picture": "authors/81363560.jpg"
+   },
+   "repository": "https://github.com/rick-dev-creator/mazapan-playback",
+   "stars": 0,
+   "homepage": "https://github.com/rick-dev-creator/mazapan-playback",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-playback",
+   "ref": "v0.1.0",
+   "commit": "da44fa757cf87471c5facccd1901b1c75c99167b",
+   "categories": [
+    "panel",
+    "bar"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/playback.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Bars.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Control.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Cover.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Marquee.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Playback.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/Seek.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/TrackText.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/cava.conf",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/playback/settings.json",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/control/sections/32-media.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/playback.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/center/26-playback.qml",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel playback",
+    "runs when you pick it: qs ipc -c mazapan call playback next",
+    "runs when you pick it: qs ipc -c mazapan call playback previous",
+    "runs when you pick it: qs ipc -c mazapan call playback toggle",
+    "needs the package cava"
+   ],
+   "settings": 3,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Wiedergabe",
+     "description": "Was gerade spielt, im eigenen Look von Mazapan: Spotify, YouTube im Browser, mpv… in der Leiste, im Kontrollzentrum und in einem kompakten Panel in den Farben des Themes, mit allen Playern, einer Leiste zum Spulen und dem Klang als Balken"
+    },
+    "es": {
+     "name": "Reproducción",
+     "description": "Lo que suena, con el aspecto propio de Mazapan: Spotify, YouTube en un navegador, mpv… en la barra, el Centro de control y un panel compacto con los colores del tema, todos los reproductores, una barra para moverte en la canción y el sonido dibujado mientras suena"
+    },
+    "fr": {
+     "name": "Lecture",
+     "description": "Ce qui joue, avec le style propre à Mazapan : Spotify, YouTube dans un navigateur, mpv… dans la barre, le Centre de contrôle et un panneau compact aux couleurs du thème, avec tous les lecteurs, une barre pour se déplacer dans la chanson et le son dessiné pendant qu'il joue"
+    },
+    "pt": {
+     "name": "Reprodução",
+     "description": "O que está tocando, com o visual próprio do Mazapan: Spotify, YouTube num navegador, mpv… na barra, na Central de controle e num painel compacto nas cores do tema, com todos os reprodutores, uma barra para andar pela música e o som desenhado enquanto toca"
+    }
+   },
+   "icon": "media/playback/icon.svg",
+   "screenshots": [
+    "media/playback/screenshot-1.webp",
+    "media/playback/screenshot-2.webp",
+    "media/playback/screenshot-3.webp"
+   ],
+   "readme": "# Playback\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/playback/).\n\n![The panel, with two players (sample songs)](media/panel.webp)\n\nWhat's playing, wherever it plays (Spotify, YouTube in a browser, mpv, any\napp that says what it plays over MPRIS), in Mazapan's own look: the\ntheme's surface, border, fonts and accent, as the Control Center and every\npanel of the system. For the cover's colors and a blurred, floating cover,\nthere's [Now Playing](https://github.com/rick-dev-creator/mazapan-now-playing);\nthis one stays sober and follows whichever theme you pick.\n\n- **The panel**, a card under the bar: the cover beside the title, the\n  artist (in the accent) and the album; a bar to drag through the song,\n  with the time gone and the time left; shuffle, back, play, next and\n  repeat, as far as the player allows them (back goes to the start of the\n  song first); the sound drawn as it plays; the player's volume.\n- **Every player, as a list**: the one that starts playing takes over, as\n  on a phone; or pick one by hand.\n- **In the bar**, beside the clock: little bars that follow the sound and\n  the song. A click opens the panel, a right click plays or pauses, a\n  middle click skips, the wheel changes its volume.\n- **In the Control Center**, in place of its music, as one of its own\n  groups: the cover, the buttons, the bar with its times, the sound and a\n  dot for each player. \"Open\" opens the panel.\n\n![In the Control Center](media/control-center.webp)\n\n`SUPER + ALT + B` opens it; in the palette, \"Playback\" plays, pauses and\nskips. In the panel: space plays or pauses, ← → move 5 seconds, ↑ ↓ the\nvolume, N and P skip, S shuffles, R repeats, Tab goes to the next player,\nEsc (or a click outside) closes.\n\n![In a light theme (paper)](media/light.webp)\n\n## What it reaches and why\n\n- **The players, over D-Bus (MPRIS)**: what they play, and the buttons you\n  press. Nothing else of theirs.\n- **cava** (installed with it): listens to what goes out of the speakers to\n  draw the bars, while something plays and the bar, the panel or the\n  Control Center shows them. Nothing is recorded or sent anywhere.\n- **The cover**, as the player gives it (a file or an address it already\n  fetched), to show it.\n- **Files it writes**: its part of the shell (`components/playback/`, the\n  bar's widget, the Control Center's section, the panel), its key in\n  Hyprland, and its settings, read as they change (no reload).\n\nIt can be on together with Now Playing: each has its own key, panel and\nbar widget, and in the Control Center the later one (Playback) shows. The\nControl Center's own music steps aside for it from the Mazapan release\nafter 0.4.1: a Control Center part with the same name and a higher number\ntakes the other's place. With this plugin off, the original is back.\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add playback\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update playback`, or\nthe Updates panel, asking again only for anything new it would be able to\ndo.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-playback\nmazapan plugins dev mazapan-playback     # applied again on every save\nmazapan plugins check mazapan-playback   # every theme, every language, before a release\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\n## License\n\nMIT\n",
+   "pictures": [
+    "media/icon.svg",
+    "media/panel.webp",
+    "media/control-center.webp",
+    "media/light.webp"
+   ],
+   "added": "2026-10-07T12:39:51+00:00",
+   "updated": "2026-10-07T12:39:51+00:00"
   },
   {
    "id": "pomodoro",

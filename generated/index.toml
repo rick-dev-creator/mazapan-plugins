@@ -1,7 +1,7 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T10:50:49+00:00
+# 2026-10-07T12:39:51+00:00
 
 [[plugin]]
 id = "markets"
@@ -44,6 +44,27 @@ translations.fr.name = "En cours de lecture"
 translations.fr.description = "Ce qui joue, où que ce soit : Spotify, YouTube dans un navigateur, mpv… dans la barre, le Centre de contrôle et un panneau avec tous les lecteurs, les couleurs de la pochette, une barre pour se déplacer dans la chanson et le son dessiné pendant qu'il joue"
 translations.pt.name = "Tocando agora"
 translations.pt.description = "O que está tocando, onde estiver: Spotify, YouTube num navegador, mpv… na barra, na Central de controle e num painel com todos os reprodutores, as cores da capa, uma barra para andar pela música e o som desenhado enquanto toca"
+
+[[plugin]]
+id = "playback"
+name = "Playback"
+description = "What's playing, in Mazapan's own look: Spotify, YouTube in a browser, mpv… in the bar, the Control Center and a compact panel in the theme's colors, with every player, a bar to drag through the song and the sound drawn as it plays"
+author = "RickDev"
+source = "https://github.com/rick-dev-creator/mazapan-playback"
+ref = "v0.1.0"
+commit = "da44fa757cf87471c5facccd1901b1c75c99167b"
+version = "0.1.0"
+license = "MIT"
+homepage = "https://github.com/rick-dev-creator/mazapan-playback"
+categories = ["panel", "bar"]
+translations.de.name = "Wiedergabe"
+translations.de.description = "Was gerade spielt, im eigenen Look von Mazapan: Spotify, YouTube im Browser, mpv… in der Leiste, im Kontrollzentrum und in einem kompakten Panel in den Farben des Themes, mit allen Playern, einer Leiste zum Spulen und dem Klang als Balken"
+translations.es.name = "Reproducción"
+translations.es.description = "Lo que suena, con el aspecto propio de Mazapan: Spotify, YouTube en un navegador, mpv… en la barra, el Centro de control y un panel compacto con los colores del tema, todos los reproductores, una barra para moverte en la canción y el sonido dibujado mientras suena"
+translations.fr.name = "Lecture"
+translations.fr.description = "Ce qui joue, avec le style propre à Mazapan : Spotify, YouTube dans un navigateur, mpv… dans la barre, le Centre de contrôle et un panneau compact aux couleurs du thème, avec tous les lecteurs, une barre pour se déplacer dans la chanson et le son dessiné pendant qu'il joue"
+translations.pt.name = "Reprodução"
+translations.pt.description = "O que está tocando, com o visual próprio do Mazapan: Spotify, YouTube num navegador, mpv… na barra, na Central de controle e num painel compacto nas cores do tema, com todos os reprodutores, uma barra para andar pela música e o som desenhado enquanto toca"
 
 [[plugin]]
 id = "pomodoro"
