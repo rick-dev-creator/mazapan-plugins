@@ -5,12 +5,15 @@ repositories made for the test: python tools/test_registry.py (MAZAPAN and
 MAZAPAN_ROOT set, as for registry.py).
 """
 
+import http.server
+import importlib.util
 import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -268,6 +271,94 @@ class Registry(unittest.TestCase):
         code, out = self.run_tool("propose", summary, env=env, cwd=reg)
         self.assertIn("already proposed", out)
         self.assertEqual(read(log), asked)
+
+
+class GitHub(unittest.TestCase):
+    """Who made a plugin, from a server that answers as GitHub's API does."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="registry-github-")
+        self.asked = []
+        self.user = {"login": "ana", "id": 42, "name": "Ana Pérez", "bio": "Desktops", "company": "", "blog": "ana.dev",
+                     "location": "Lima", "html_url": "https://github.com/ana", "created_at": "2015-03-01T00:00:00Z",
+                     "type": "User", "email": "ana@example.com", "avatar_url": ""}
+        test = self
+
+        class Api(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def do_GET(self):
+                test.asked.append((self.path, self.headers.get("If-None-Match", "")))
+                if self.path == "/repos/ana/mazapan-hello":
+                    return self.send(200, json.dumps({"html_url": "https://github.com/ana/mazapan-hello",
+                                                      "stargazers_count": 7, "owner": {"id": 42, "login": "ana"}}))
+                if self.path == "/user/42":
+                    etag = '"v-' + test.user["login"] + '"'
+                    if self.headers.get("If-None-Match") == etag:
+                        return self.send(304, "")
+                    return self.send(200, json.dumps(test.user), etag=etag)
+                if self.path.startswith("/avatars/42"):
+                    return self.send(200, "picture", kind="image/png")
+                self.send(404, "{}")
+
+            def send(self, code, body, kind="application/json", etag=""):
+                self.send_response(code)
+                self.send_header("Content-Type", kind)
+                if etag:
+                    self.send_header("ETag", etag)
+                self.end_headers()
+                self.wfile.write(body.encode())
+
+        self.server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Api)
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+        api = f"http://127.0.0.1:{self.server.server_port}"
+        self.user["avatar_url"] = f"{api}/avatars/42?v=4"
+        os.environ.update(REGISTRY_GITHUB_API=api, REGISTRY_LOCAL_SOURCES="1")
+        spec = importlib.util.spec_from_file_location("registry", os.path.join(HERE, "registry.py"))
+        self.registry = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.registry)
+        self.authors = os.path.join(self.tmp, "authors")
+        os.makedirs(self.authors)
+
+    def tearDown(self):
+        if self.server:
+            self.server.shutdown()
+            self.server.server_close()
+        for k in ["REGISTRY_GITHUB_API", "REGISTRY_LOCAL_SOURCES"]:
+            os.environ.pop(k, None)
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_the_owner_as_github_shows_them(self):
+        dev = self.registry.developer("https://github.com/ana/mazapan-hello", self.authors)
+        self.assertEqual(dev["stars"], 7)
+        self.assertEqual(dev["repository"], "https://github.com/ana/mazapan-hello")
+        o = dev["owner"]
+        self.assertEqual((o["id"], o["login"], o["name"], o["html_url"], o["picture"]),
+                         (42, "ana", "Ana Pérez", "https://github.com/ana", "authors/42.png"))
+        self.assertNotIn("email", o)
+        self.assertNotIn("ana@example.com", read(os.path.join(self.authors, "42.json")))
+        self.assertEqual(read(os.path.join(self.authors, "42.png")), "picture")
+        self.assertTrue(any(p.startswith("/avatars/42?v=4&s=256") for p, _ in self.asked))
+
+        # Again: asked with the ETag, unchanged, the picture not fetched again.
+        self.asked.clear()
+        self.assertEqual(self.registry.developer("https://github.com/ana/mazapan-hello", self.authors)["owner"], o)
+        self.assertIn(("/user/42", '"v-ana"'), self.asked)
+        self.assertFalse(any(p.startswith("/avatars") for p, _ in self.asked))
+
+        # Renamed: found by the account's number, shown with its new name.
+        self.user.update(login="ana-p", html_url="https://github.com/ana-p")
+        o = self.registry.developer("https://github.com/ana/mazapan-hello", self.authors)["owner"]
+        self.assertEqual((o["login"], o["html_url"]), ("ana-p", "https://github.com/ana-p"))
+
+    def test_not_on_github_or_github_not_answering(self):
+        self.assertIsNone(self.registry.developer("https://gitlab.com/ana/mazapan-hello", self.authors))
+        self.server.shutdown()
+        self.server.server_close()
+        self.server = None
+        with self.assertRaises(self.registry.Problem):
+            self.registry.developer("https://github.com/ana/mazapan-hello", self.authors)
 
 
 if __name__ == "__main__":

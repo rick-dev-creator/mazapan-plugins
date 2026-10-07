@@ -20,6 +20,11 @@ read from it.
   [plugins.toml](plugins.toml) is the repository, the tag and that tag's
   commit. What was looked at is exactly what Mazapan installs, even if the
   tag is moved later.
+- **You're who GitHub says you are.** The account that owns your
+  repository is the plugin's developer: mazapan.dev shows its public
+  profile (picture, name, @login, bio, website) and the repository's
+  stars, read from GitHub once a day; never your email. `author` in
+  plugin.toml is the name you sign with, shown beside it.
 - **Everything else comes from your plugin.** Its name, description,
   translations, author, license, icon and screenshots are read from its
   plugin.toml at that commit, into [generated/](generated): `index.toml`

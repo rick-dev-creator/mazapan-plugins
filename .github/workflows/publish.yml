@@ -1,11 +1,14 @@
-# What Mazapan and mazapan.dev read, made again whenever the list changes:
-# generated/index.toml (the catalog), plugins.json and media/ (the gallery).
+# What Mazapan and mazapan.dev read, made again whenever the list changes,
+# and once a day for what GitHub says (each developer's profile, the stars):
+# generated/index.toml (the catalog), plugins.json, media/ and authors/ (the gallery).
 name: Publish
 
 on:
   push:
     branches: [main]
     paths: [plugins.toml, tools/**]
+  schedule:
+    - cron: "23 5 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +33,8 @@ jobs:
           ref: ${{ vars.MAZAPAN_REF || 'main' }}
       - name: Build
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git config --global --add safe.directory "$PWD"
           git pull --quiet --rebase origin main
