@@ -330,6 +330,8 @@ def cmd_build(args):
                 "icon": picture(info["icon"], "icon") if info["icon"] else "",
                 "screenshots": [picture(s, f"screenshot-{i + 1}") for i, s in enumerate(info["screenshots"])],
                 "readme": readme,
+                # Where the gallery's pictures are in the repository: the README needn't show them again.
+                "pictures": [x for x in [info["icon"], *info["screenshots"]] if x],
                 "added": old.get("added", now.isoformat()),
                 "updated": old.get("updated", now.isoformat()) if old.get("commit") == e["commit"] else now.isoformat(),
             })

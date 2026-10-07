@@ -21,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
+      # git before the checkout, or it comes without its history.
+      - name: Tools
+        run: pacman -Syu --noconfirm --needed git python >/dev/null
       - uses: actions/checkout@v4
         with:
           path: plugin
