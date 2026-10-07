@@ -34,44 +34,27 @@ read from it.
 
 ## Listing your plugin
 
-1. **A public repository** with your plugin at its root: plugin.toml, a
-   README.md, a LICENSE. `mazapan plugins new my-plugin --kind panel --dir .`
-   gives one to start from; `mazapan plugins fork <built-in> <new-id>` starts
-   from one of Mazapan's.
-2. **In plugin.toml**, who made it and how it looks:
+**The whole way, step by step: [Publishing a plugin](https://github.com/rick-dev-creator/mazapan/blob/main/docs/publishing-plugins.md).**
+In short:
 
-   ```toml
-   [plugin]
-   id = "my-plugin"
-   name = "My plugin"
-   version = "1.0.0"
-   api = 1
-   description = "One line on what it does"
-   categories = ["panel"]          # bar, panel, theme, window, hardware, tools, agent
-   author = "You"
-   homepage = "https://github.com/you/mazapan-my-plugin"
-   license = "MIT"
-
-   [gallery]
-   icon = "media/icon.svg"         # SVG or PNG, up to 256 KB
-   screenshots = ["media/panel.webp"]  # PNG, JPEG or WebP, up to 2 MB each, up to 8
-   ```
-
-3. **`mazapan plugins check .`** with no errors: it renders your plugin with
-   every theme, in every language it has, and says what it would be able to
-   do. Add the same check to your repository's CI:
+1. Your plugin in a **public repository**, plugin.toml at its root, with
+   a README.md and a LICENSE, `author`, `license` and a `[gallery]` icon
+   in plugin.toml. `mazapan plugins new my-plugin --kind panel --dir .`
+   gives one to start from.
+2. **`mazapan plugins check .`** with no errors. Add the same check to
+   your CI:
 
    ```yaml
    # .github/workflows/check.yml
    name: Check
-   on: [push, pull_request]
+   on: [push, pull_request, workflow_dispatch]
    jobs:
      check:
        uses: rick-dev-creator/mazapan-plugins/.github/workflows/check-plugin.yml@main
    ```
 
-4. **Tag the version**: `git tag v1.0.0 && git push --tags`.
-5. **A pull request** adding your entry to plugins.toml, in order by id:
+3. **Tag the version**, `v` + plugin.toml's version: `git tag v1.0.0 && git push origin v1.0.0`.
+4. **A pull request** adding your entry to plugins.toml, in order by id:
 
    ```toml
    [[plugin]]
@@ -81,9 +64,10 @@ read from it.
    commit = "…"   # git rev-parse v1.0.0^{commit}
    ```
 
-The pull request's check fetches your plugin at that commit and says what
-it found, and what your plugin would be able to do. A person then looks at
-it: listing a plugin is the registry vouching that it's what it says it is.
+The pull request's check fetches your plugin at that commit, checks it,
+and says everything it would be able to do. A person then looks at it:
+listing a plugin is the registry vouching that it's what it says it is.
+After that, **new versions are only tags**: the registry finds them.
 
 ## What the registry asks
 
