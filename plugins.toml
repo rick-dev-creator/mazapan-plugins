@@ -18,6 +18,12 @@ ref = "v0.1.2"
 commit = "2a4f4c7441b8dee0e9adb836f781f484d59e6a9f"
 
 [[plugin]]
+id = "playback"
+source = "https://github.com/rick-dev-creator/mazapan-playback"
+ref = "v0.1.0"
+commit = "da44fa757cf87471c5facccd1901b1c75c99167b"
+
+[[plugin]]
 id = "pomodoro"
 source = "https://github.com/rick-dev-creator/mazapan-pomodoro"
 ref = "v0.2.0"
