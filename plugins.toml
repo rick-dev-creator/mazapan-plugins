@@ -32,5 +32,5 @@ commit = "cc221978e23e3c6ec40bc0883952da265e75bb41"
 [[plugin]]
 id = "radio"
 source = "https://github.com/rick-dev-creator/mazapan-radio"
-ref = "v0.1.2"
-commit = "2e091402935d49970c75d1a2b03de160e71501af"
+ref = "v0.1.3"
+commit = "4ec63aabedd3e8741d71c0e31d60d1d9ca8a8c7c"
