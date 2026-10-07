@@ -1,7 +1,7 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T14:00:15+00:00
+# 2026-10-07T14:06:28+00:00
 
 [[plugin]]
 id = "markets"
@@ -93,9 +93,9 @@ name = "Radio"
 description = "Live radio from all over the world, found by mood, country or name: each song's cover and colors as it plays, the songs you heard to find again, favorites, a sleep timer and an alarm, and the media keys"
 author = "RickDev"
 source = "https://github.com/rick-dev-creator/mazapan-radio"
-ref = "v0.1.1"
-commit = "11822803ec4e0207fde69ef5f3f3364bd0245a62"
-version = "0.1.1"
+ref = "v0.1.2"
+commit = "2e091402935d49970c75d1a2b03de160e71501af"
+version = "0.1.2"
 license = "MIT"
 homepage = "https://github.com/rick-dev-creator/mazapan-radio"
 categories = ["panel", "bar", "tools"]

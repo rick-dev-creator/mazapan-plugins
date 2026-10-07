@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07T14:00:15+00:00",
+ "generated": "2026-10-07T14:06:28+00:00",
  "plugins": [
   {
    "id": "markets",
@@ -382,7 +382,7 @@
    "id": "radio",
    "name": "Radio",
    "description": "Live radio from all over the world, found by mood, country or name: each song's cover and colors as it plays, the songs you heard to find again, favorites, a sleep timer and an alarm, and the media keys",
-   "version": "0.1.1",
+   "version": "0.1.2",
    "author": "RickDev",
    "owner": {
     "id": 81363560,
@@ -402,8 +402,8 @@
    "homepage": "https://github.com/rick-dev-creator/mazapan-radio",
    "license": "MIT",
    "source": "https://github.com/rick-dev-creator/mazapan-radio",
-   "ref": "v0.1.1",
-   "commit": "11822803ec4e0207fde69ef5f3f3364bd0245a62",
+   "ref": "v0.1.2",
+   "commit": "2e091402935d49970c75d1a2b03de160e71501af",
    "categories": [
     "panel",
     "bar",
@@ -491,7 +491,7 @@
     "media/light.webp"
    ],
    "added": "2026-10-07T13:44:05+00:00",
-   "updated": "2026-10-07T14:00:15+00:00"
+   "updated": "2026-10-07T14:06:28+00:00"
   }
  ]
 }
