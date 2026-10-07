@@ -6,6 +6,12 @@
 # are kept in order by id.
 
 [[plugin]]
+id = "dock"
+source = "https://github.com/rick-dev-creator/mazapan-dock"
+ref = "v0.1.0"
+commit = "59d6eacee04fac2300b3015d1379caebf200fc7b"
+
+[[plugin]]
 id = "markets"
 source = "https://github.com/rick-dev-creator/mazapan-markets"
 ref = "v0.2.0"
