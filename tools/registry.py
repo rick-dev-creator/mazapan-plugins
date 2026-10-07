@@ -95,9 +95,10 @@ def set_entry(text, id, ref, commit):
     """plugins.toml's text with the entry for id at ref and commit; the rest (comments too) as it was."""
     blocks = re.split(r"(?m)^(?=\[\[plugin\]\])", text)
     for i, b in enumerate(blocks):
-        if re.search(rf'(?m)^id\s*=\s*"{re.escape(id)}"\s*$', b):
-            b = re.sub(r'(?m)^ref\s*=\s*".*"\s*$', f'ref = "{ref}"', b)
-            b = re.sub(r'(?m)^commit\s*=\s*".*"\s*$', f'commit = "{commit}"', b)
+        if re.search(rf'(?m)^id[ \t]*=[ \t]*"{re.escape(id)}"[ \t]*$', b):
+            # [ \t]*, not \s*: the newlines after the entry stay.
+            b = re.sub(r'(?m)^ref[ \t]*=[ \t]*".*"[ \t]*$', f'ref = "{ref}"', b)
+            b = re.sub(r'(?m)^commit[ \t]*=[ \t]*".*"[ \t]*$', f'commit = "{commit}"', b)
             blocks[i] = b
             return "".join(blocks)
     raise Problem(f"{id} isn't in plugins.toml")

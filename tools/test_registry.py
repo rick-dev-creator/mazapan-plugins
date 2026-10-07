@@ -273,6 +273,21 @@ class Registry(unittest.TestCase):
         self.assertEqual(read(log), asked)
 
 
+class SetEntry(unittest.TestCase):
+    """plugins.toml's text with one entry moved to a new version, the rest as it was."""
+
+    def test_an_entry_between_others_keeps_its_place(self):
+        spec = importlib.util.spec_from_file_location("registry", os.path.join(HERE, "registry.py"))
+        registry = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(registry)
+        entry = lambda id, ref, c: f'[[plugin]]\nid = "{id}"\nsource = "https://github.com/ana/{id}"\nref = "{ref}"\ncommit = "{c * 40}"\n'
+        text = "# the registry\n\n" + entry("a", "v1.0.0", "1") + "\n" + entry("b", "v1.0.0", "2") + "\n" + entry("c", "v1.0.0", "3")
+        out = registry.set_entry(text, "b", "v1.1.0", "4" * 40)
+        self.assertEqual(out, text.replace(entry("b", "v1.0.0", "2"), entry("b", "v1.1.0", "4")))
+        import tomllib
+        self.assertEqual([e["ref"] for e in tomllib.loads(out)["plugin"]], ["v1.0.0", "v1.1.0", "v1.0.0"])
+
+
 class GitHub(unittest.TestCase):
     """Who made a plugin, from a server that answers as GitHub's API does."""
 
