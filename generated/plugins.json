@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07T12:39:51+00:00",
+ "generated": "2026-10-07T13:44:05+00:00",
  "plugins": [
   {
    "id": "markets",
@@ -377,6 +377,121 @@
    ],
    "added": "2026-10-07T03:59:43+00:00",
    "updated": "2026-10-07T03:59:43+00:00"
+  },
+  {
+   "id": "radio",
+   "name": "Radio",
+   "description": "Live radio from all over the world, found by mood, country or name: each song's cover and colors as it plays, the songs you heard to find again, favorites, a sleep timer and an alarm, and the media keys",
+   "version": "0.1.0",
+   "author": "RickDev",
+   "owner": {
+    "id": 81363560,
+    "login": "rick-dev-creator",
+    "name": "RickDev",
+    "bio": "Software Architect with 16+ of experience building enterprise apps.",
+    "company": "",
+    "blog": "",
+    "location": "",
+    "html_url": "https://github.com/rick-dev-creator",
+    "created_at": "2021-03-25T11:39:42Z",
+    "type": "User",
+    "picture": "authors/81363560.jpg"
+   },
+   "repository": "https://github.com/rick-dev-creator/mazapan-radio",
+   "stars": 0,
+   "homepage": "https://github.com/rick-dev-creator/mazapan-radio",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-radio",
+   "ref": "v0.1.0",
+   "commit": "51ab18b9683dbb7b58834a5a89b687d52a698e9d",
+   "categories": [
+    "panel",
+    "bar",
+    "tools"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, a config that can run commands: ~/.config/systemd/user/mazapan-radio.service",
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/radio.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Backdrop.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Bars.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Control.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Logo.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Marquee.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/RadioService.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/Seek.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/StationCard.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/TrackText.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/cava.conf",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/radio/settings.json",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/radio.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/right/04-radio.qml",
+    "full access, code: ~/.local/share/mazapan/bin/radio",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs after writing: systemctl --user daemon-reload; [ -e ~/.config/systemd/user/mazapan-radio.service ] || systemctl --user stop mazapan-radio.service mazapan-radio-alarm.timer 2>/dev/null; true",
+    "runs after writing: systemctl --user try-restart mazapan-radio.service 2>/dev/null; true",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune ambient",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune favorites",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune jazz",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune lofi",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune news",
+    "runs when you pick it: python3 ~/.local/share/mazapan/bin/radio tune random",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel radio",
+    "runs when you pick it: qs ipc -c mazapan call radio stop",
+    "needs the package cava",
+    "needs the package mpv",
+    "needs the package python",
+    "needs the package python-dbus",
+    "needs the package python-gobject",
+    "needs the package wl-clipboard",
+    "needs the package xdg-utils"
+   ],
+   "settings": 5,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Radio",
+     "description": "Live-Radio aus aller Welt, nach Stimmung, Land oder Name: Cover und Farben jedes Songs beim Hören, gehörte Songs zum Wiederfinden, Favoriten, ein Schlaf-Timer, ein Wecker und die Medientasten"
+    },
+    "es": {
+     "name": "Radio",
+     "description": "Radio en vivo de todo el mundo, por ánimo, país o nombre: la portada y los colores de cada canción mientras suena, las canciones escuchadas para encontrarlas otra vez, favoritas, temporizador para dormir, alarma y las teclas de medios"
+    },
+    "fr": {
+     "name": "Radio",
+     "description": "La radio en direct du monde entier, par humeur, pays ou nom : la pochette et les couleurs de chaque chanson, les chansons entendues à retrouver, des favoris, une minuterie de sommeil, un réveil et les touches multimédia"
+    },
+    "pt": {
+     "name": "Rádio",
+     "description": "Rádio ao vivo do mundo todo, por clima, país ou nome: a capa e as cores de cada música enquanto toca, as músicas ouvidas para achar de novo, favoritas, timer para dormir, alarme e as teclas de mídia"
+    }
+   },
+   "icon": "media/radio/icon.svg",
+   "screenshots": [
+    "media/radio/screenshot-1.webp",
+    "media/radio/screenshot-2.webp",
+    "media/radio/screenshot-3.webp"
+   ],
+   "readme": "# Radio\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/radio/).\n\n![Jazz, with the song's own cover (live stations, real songs)](media/panel.webp)\n\nLive radio from all over the world, found the way you think of it: by\nmood first (\"something to focus\", \"jazz\"), then by country or by name. And\nthe song playing is more than a line of text: its cover, its colors, and a\nlist of every song you heard, to find it again.\n\n- **Moods first**: Focus, Chill, Lo-fi, Jazz, Classical, Electronic, Rock,\n  Hip-hop, Pop, Latin, Soul & R&B, News, and what's popular worldwide.\n  Then **near you** (your country) and **the world**, every country with\n  its flag. Or search by name, genre or country.\n- **Each song's cover.** Stations say what they play (\"Artist - Title\",\n  or \"Title by Artist\"); the cover is found for it, and the top of the\n  panel takes its light. A station's own tagline isn't taken for a song,\n  and a station that says title and artist the wrong way round is set\n  right.\n- **The songs you heard**, newest first, with their covers, the station\n  and when: copy one, or find it on YouTube or Spotify.\n- **Stations as cards**: their logo (or their initials on a color of their\n  own), their country's flag, codec and bitrate, their genres. Only\n  stations that worked at the directory's last check.\n- **Favorites and recent stations**; next and previous through the list\n  you played from.\n- **A sleep timer** (15, 30, 60, 90 minutes; the last 30 seconds fade\n  out) and **an alarm** that wakes you up with your last station, its\n  volume rising over a minute (it plays even with the panel closed).\n- **It plays on its own**: close the panel, it keeps playing; the media\n  keys, the bar and the Control Center's player see it (MPRIS), with the\n  song and its cover, in [Playback](https://github.com/rick-dev-creator/mazapan-playback)\n  or [Now Playing](https://github.com/rick-dev-creator/mazapan-now-playing)\n  too.\n- **In the bar**, while one is on: its mark and the station. A click\n  opens the panel, a right click plays or pauses, a middle click goes to\n  the next station, the wheel changes its volume.\n- **From the palette**: \"Radio: jazz\", \"Radio: focus\", \"Radio: lo-fi\",\n  \"Radio: news\", \"Radio: my favorites\", \"Radio: a random station\", \"Radio:\n  stop\", without opening anything.\n\n![The songs heard, to find them again](media/heard.webp)\n\n`SUPER + ALT + R` opens it. In the panel: `/` searches, the arrows move\nthrough the cards, Enter plays, Space plays or pauses, F keeps a favorite,\nN and P go to the next and previous station, Esc clears the search or\ncloses (so does a click outside).\n\n![In a light theme (paper)](media/light.webp)\n\n## What it reaches and why\n\n- **[Radio Browser](https://www.radio-browser.info/)**, the community's\n  directory of stations: the lists you open, and one \"click\" counted for a\n  station when you play it, as the directory asks of players. It's told\n  the plugin's name as its user agent; nothing about you.\n- **The stations themselves**: their stream (played by mpv) and their\n  logo. Before one plays, its address and every redirect are checked:\n  a stream that leads to this computer or its local network is refused.\n  Streams over plain http aren't encrypted.\n- **iTunes Search** (itunes.apple.com), for each song's cover: the song's\n  artist and title, nothing else. Off with the \"Song covers\" setting.\n- **cava**, while the panel is open and something plays: it listens to\n  what goes out of the speakers to draw the bars. Nothing is recorded or\n  sent anywhere.\n- **What it keeps**: `~/.local/state/mazapan/radio/library.json`\n  (favorites, recent stations, the last 200 songs heard, the volume, the\n  alarm) and the covers in `~/.cache/mazapan/radio`. \"Forget them\" clears\n  the songs heard.\n- **What it runs**: its player, `~/.local/share/mazapan/bin/radio`, as a\n  user service (`mazapan-radio.service`), started when first needed; the\n  alarm as a user timer (`mazapan-radio-alarm.timer`). With the plugin off,\n  both are stopped.\n- **Files it writes**: its part of the shell (`components/radio/`, the\n  bar's widget, the panel), its key in Hyprland, and its settings, read as\n  they change.\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add radio\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update radio`, or the\nUpdates panel, asking again only for anything new it would be able to do.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-radio\nmazapan plugins dev mazapan-radio     # applied again on every save\nmazapan plugins check mazapan-radio   # every theme, every language, before a release\njournalctl --user -u mazapan-radio    # what the player says\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\n## License\n\nMIT\n",
+   "pictures": [
+    "media/icon.svg",
+    "media/panel.webp",
+    "media/heard.webp",
+    "media/light.webp"
+   ],
+   "added": "2026-10-07T13:44:05+00:00",
+   "updated": "2026-10-07T13:44:05+00:00"
   }
  ]
 }

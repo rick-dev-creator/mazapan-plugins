@@ -1,7 +1,7 @@
 # The Mazapan plugin registry: plugins from others, each in its own
 # repository, at the commit the registry looked at. Generated from
 # https://github.com/rick-dev-creator/mazapan-plugins; don't edit.
-# 2026-10-07T12:39:51+00:00
+# 2026-10-07T13:44:05+00:00
 
 [[plugin]]
 id = "markets"
@@ -86,3 +86,24 @@ translations.fr.name = "Pomodoro"
 translations.fr.description = "Concentrez-vous par sessions, avec des pauses entre elles : un anneau qui se remplit avec le temps, les sessions de chaque cycle, ce sur quoi vous travaillez, Ne pas déranger pendant la concentration, et la concentration du jour et de la semaine en un coup d'œil"
 translations.pt.name = "Pomodoro"
 translations.pt.description = "Foque em sessões com pausas entre elas: um anel que se enche com o tempo, as sessões de cada ciclo, no que você está trabalhando, Não perturbe enquanto foca, e o foco de hoje e da semana num relance"
+
+[[plugin]]
+id = "radio"
+name = "Radio"
+description = "Live radio from all over the world, found by mood, country or name: each song's cover and colors as it plays, the songs you heard to find again, favorites, a sleep timer and an alarm, and the media keys"
+author = "RickDev"
+source = "https://github.com/rick-dev-creator/mazapan-radio"
+ref = "v0.1.0"
+commit = "51ab18b9683dbb7b58834a5a89b687d52a698e9d"
+version = "0.1.0"
+license = "MIT"
+homepage = "https://github.com/rick-dev-creator/mazapan-radio"
+categories = ["panel", "bar", "tools"]
+translations.de.name = "Radio"
+translations.de.description = "Live-Radio aus aller Welt, nach Stimmung, Land oder Name: Cover und Farben jedes Songs beim Hören, gehörte Songs zum Wiederfinden, Favoriten, ein Schlaf-Timer, ein Wecker und die Medientasten"
+translations.es.name = "Radio"
+translations.es.description = "Radio en vivo de todo el mundo, por ánimo, país o nombre: la portada y los colores de cada canción mientras suena, las canciones escuchadas para encontrarlas otra vez, favoritas, temporizador para dormir, alarma y las teclas de medios"
+translations.fr.name = "Radio"
+translations.fr.description = "La radio en direct du monde entier, par humeur, pays ou nom : la pochette et les couleurs de chaque chanson, les chansons entendues à retrouver, des favoris, une minuterie de sommeil, un réveil et les touches multimédia"
+translations.pt.name = "Rádio"
+translations.pt.description = "Rádio ao vivo do mundo todo, por clima, país ou nome: a capa e as cores de cada música enquanto toca, as músicas ouvidas para achar de novo, favoritas, timer para dormir, alarme e as teclas de mídia"
