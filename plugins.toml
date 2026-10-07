@@ -28,3 +28,9 @@ id = "pomodoro"
 source = "https://github.com/rick-dev-creator/mazapan-pomodoro"
 ref = "v0.2.0"
 commit = "cc221978e23e3c6ec40bc0883952da265e75bb41"
+
+[[plugin]]
+id = "radio"
+source = "https://github.com/rick-dev-creator/mazapan-radio"
+ref = "v0.1.0"
+commit = "51ab18b9683dbb7b58834a5a89b687d52a698e9d"
