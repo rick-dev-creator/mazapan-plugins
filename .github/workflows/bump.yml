@@ -37,6 +37,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git config --global --add safe.directory "$PWD"
           git config --global user.name "mazapan-registry[bot]"

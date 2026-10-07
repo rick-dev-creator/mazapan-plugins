@@ -6,8 +6,9 @@ repository), the tag of the version listed and its commit. Everything else
 comes from the plugin's repository, at that commit.
 
   registry.py check [--entries ID,...]   every entry (or these) looked at, as a pull request is
-  registry.py build                      generated/: index.toml (what Mazapan reads), plugins.json
-                                         and media/ (what mazapan.dev shows)
+  registry.py build                      generated/: index.toml (what Mazapan reads), plugins.json,
+                                         media/ and authors/ (what mazapan.dev shows: who made each
+                                         one, as their public GitHub profile says)
   registry.py bump                       newer tags of each plugin: listed when they can do nothing
                                          more than the version listed; else a pull request to look at
 
@@ -26,12 +27,16 @@ import subprocess
 import sys
 import tempfile
 import tomllib
+import urllib.error
+import urllib.request
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIST = os.environ.get("REGISTRY_LIST") or os.path.join(HERE, "plugins.toml")
 OUT = os.environ.get("REGISTRY_OUT") or os.path.join(HERE, "generated")
 # Tests list repositories in folders of their own; the registry never does.
 LOCAL = os.environ.get("REGISTRY_LOCAL_SOURCES") == "1"
+# Tests answer as GitHub's API from a server of their own.
+GITHUB_API = os.environ.get("REGISTRY_GITHUB_API") or "https://api.github.com"
 
 ID = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}\Z")
 COMMIT = re.compile(r"^[0-9a-f]{40}\Z")
@@ -40,6 +45,9 @@ SOURCE = re.compile(r"^https://[A-Za-z0-9.-]+(/[A-Za-z0-9._~-]+)+\Z")
 KEYS = {"id", "source", "ref", "commit"}
 CATEGORIES = ["bar", "panel", "theme", "window", "hardware", "tools", "agent"]
 PICTURES = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".svg": "image/svg+xml"}
+GITHUB_REPO = re.compile(r"^https://github\.com/([A-Za-z0-9-]+)/([A-Za-z0-9._-]+)\Z")
+# What a developer's public GitHub profile says, as the gallery shows it; never their email.
+PROFILE = ["login", "name", "bio", "company", "blog", "location", "html_url", "created_at", "type"]
 
 
 class Problem(Exception):
@@ -242,6 +250,82 @@ def cmd_check(args):
     return 1 if failed else 0
 
 
+# --- GitHub -----------------------------------------------------------------------
+
+
+def github_get(url, etag="", raw=False):
+    """
+    GitHub, read only: (status, what it said, its ETag). Asked with the ETag
+    of the copy kept, an unchanged answer is a 304 that costs nothing of
+    GitHub's limits. The token, when there is one, only raises those limits.
+    """
+    req = urllib.request.Request(url, headers={"User-Agent": "mazapan-registry", "Accept": "application/vnd.github+json"})
+    if etag:
+        req.add_header("If-None-Match", etag)
+    if os.environ.get("GITHUB_TOKEN") and url.startswith(GITHUB_API):
+        req.add_header("Authorization", f"Bearer {os.environ['GITHUB_TOKEN']}")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            body = r.read()
+            return r.status, (body, r.headers.get("Content-Type", "")) if raw else json.loads(body), r.headers.get("ETag", "")
+    except urllib.error.HTTPError as e:
+        e.close()
+        if e.code == 304:
+            return 304, None, etag
+        raise Problem(f"GitHub said {e.code} to {url}")
+    except (urllib.error.URLError, TimeoutError, ValueError) as e:
+        raise Problem(f"GitHub didn't answer {url}: {e}")
+
+
+AVATAR_TYPES = {"image/png": ".png", "image/jpeg": ".jpg", "image/webp": ".webp", "image/gif": ".gif"}
+
+
+def developer(source, authors):
+    """
+    Who made a plugin, as GitHub shows them: the account that owns its
+    repository, by its number (a renamed account is still found), its public
+    profile and picture, and the repository's stars. One copy per developer in
+    authors/ (<number>.json and its picture), asked for again with its ETag.
+    None for a repository not on GitHub; a Problem when GitHub can't say.
+    """
+    m = GITHUB_REPO.match(source)
+    if not m:
+        return None
+    _, repo, _ = github_get(f"{GITHUB_API}/repos/{m[1]}/{m[2]}")
+    number = (repo.get("owner") or {}).get("id")
+    if not isinstance(number, int):
+        raise Problem(f"GitHub gave no account number for {source}")
+    copy = os.path.join(authors, f"{number}.json")
+    kept = {}
+    if os.path.isfile(copy):
+        with open(copy) as f:
+            kept = json.load(f)
+    picture = kept.get("picture", "")
+    have = picture and os.path.isfile(os.path.join(authors, picture))
+    status, user, etag = github_get(f"{GITHUB_API}/user/{number}", kept.get("etag", "") if have else "")
+    if status != 304:
+        profile = {k: user.get(k) or "" for k in PROFILE}
+        avatar = user.get("avatar_url") or ""
+        if not avatar.startswith("https://") and not LOCAL:
+            raise Problem(f"GitHub gave no picture for {profile['login']}")
+        _, (data, kind), _ = github_get(avatar + ("&" if "?" in avatar else "?") + "s=256", raw=True)
+        ext = AVATAR_TYPES.get(kind.split(";")[0].strip())
+        if not ext:
+            raise Problem(f"GitHub's picture for {profile['login']} is {kind or 'of no type'}")
+        if have and picture != f"{number}{ext}":
+            os.remove(os.path.join(authors, picture))
+        picture = f"{number}{ext}"
+        with open(os.path.join(authors, picture), "wb") as f:
+            f.write(data)
+        kept = {"id": number, **profile, "picture": picture, "etag": etag,
+                "read": datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()}
+        with open(copy, "w") as f:
+            json.dump(kept, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+    shown = {"id": number, **{k: kept.get(k, "") for k in PROFILE}, "picture": f"authors/{kept['picture']}"}
+    return {"owner": shown, "repository": repo.get("html_url") or source, "stars": int(repo.get("stargazers_count") or 0)}
+
+
 # --- build ------------------------------------------------------------------------
 
 
@@ -284,6 +368,8 @@ def cmd_build(args):
     plugins, failed = [], []
     media = os.path.join(OUT, "media.new")
     shutil.rmtree(media, ignore_errors=True)
+    authors = os.path.join(OUT, "authors")
+    os.makedirs(authors, exist_ok=True)
     with tempfile.TemporaryDirectory() as work:
         for e in entries:
             try:
@@ -312,12 +398,20 @@ def cmd_build(args):
             old = before.get(e["id"], {})
             with open(os.path.join(dir, "README.md"), encoding="utf-8", errors="replace") as f:
                 readme = f.read()
+            try:
+                dev = developer(e["source"], authors)
+            except Problem as p:
+                # GitHub not answering: who made it as GitHub said last time.
+                print(f"! {e['id']}: {p}")
+                dev = {k: old[k] for k in ["owner", "repository", "stars"] if k in old} or None
             plugins.append({
                 "id": e["id"],
                 "name": info["name"],
                 "description": info["description"],
                 "version": info["version"],
+                # The name the plugin gives itself; who made it is the owner, as GitHub shows them.
                 "author": info["author"],
+                **(dev or {}),
                 "homepage": info["homepage"] or e["source"],
                 "license": info["license"],
                 "source": e["source"],
@@ -338,6 +432,12 @@ def cmd_build(args):
                 "updated": old.get("updated", now.isoformat()) if old.get("commit") == e["commit"] else now.isoformat(),
             })
     plugins.sort(key=lambda p: p["id"])
+    # Developers no plugin points to any more: their copies go.
+    shown = {p["owner"]["picture"].removeprefix("authors/") for p in plugins if p.get("owner")}
+    shown |= {f"{p['owner']['id']}.json" for p in plugins if p.get("owner")}
+    for f in os.listdir(authors):
+        if f not in shown:
+            os.remove(os.path.join(authors, f))
     generated = max([p["updated"] for p in plugins], default=now.isoformat())
     os.makedirs(OUT, exist_ok=True)
     shutil.rmtree(os.path.join(OUT, "media"), ignore_errors=True)
