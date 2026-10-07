@@ -1,0 +1,141 @@
+{
+ "generated": "2026-10-07T03:59:43+00:00",
+ "plugins": [
+  {
+   "id": "markets",
+   "name": "Markets",
+   "description": "Crypto and stock prices with trend charts: a watchlist where each symbol has its own timeframe (BTC 4H, BTC 1W, SOL 1D), the top 20 coins, your stocks, and a ticker in the bar",
+   "version": "0.2.0",
+   "author": "rickdev",
+   "homepage": "https://github.com/rick-dev-creator/mazapan-markets",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-markets",
+   "ref": "v0.2.0",
+   "commit": "8389e6db4efdc45e8fd7ed05f577fc7206baca27",
+   "categories": [
+    "panel",
+    "bar"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/markets.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/markets/CandleChart.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/markets/MarketsService.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/markets/Sparkline.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/markets/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/control/sections/50-markets.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/markets.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/right/45-markets.qml",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel markets"
+   ],
+   "settings": 8,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Märkte",
+     "description": "Krypto- und Aktienkurse mit Trendcharts: eine Watchlist, in der jedes Symbol seinen eigenen Zeitraum hat (BTC 4H, BTC 1W, SOL 1D), die Top 20 Coins, deine Aktien und ein Ticker in der Leiste"
+    },
+    "es": {
+     "name": "Mercados",
+     "description": "Precios de crypto y acciones con gráficos de tendencia: una lista donde cada símbolo tiene su temporalidad (BTC 4H, BTC 1W, SOL 1D), el top 20 de monedas, tus acciones y un ticker en la barra"
+    },
+    "fr": {
+     "name": "Marchés",
+     "description": "Cours des cryptos et des actions avec graphiques de tendance : une liste où chaque symbole a sa propre période (BTC 4H, BTC 1W, SOL 1D), le top 20 des cryptos, vos actions et un défilant dans la barre"
+    },
+    "pt": {
+     "name": "Mercados",
+     "description": "Preços de cripto e ações com gráficos de tendência: uma lista em que cada símbolo tem seu próprio período (BTC 4H, BTC 1W, SOL 1D), as 20 maiores moedas, suas ações e um ticker na barra"
+    }
+   },
+   "icon": "media/markets/icon.svg",
+   "screenshots": [
+    "media/markets/screenshot-1.webp"
+   ],
+   "readme": "# Markets\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/markets/).\n\n![The watchlist and a 4-hour chart](media/panel.webp)\n\nCrypto and stocks at a glance, with their trend, for traders who watch the\nsame symbol in several timeframes.\n\n- **Main**: your watchlist. Each entry is a symbol *and* a timeframe:\n  `BTC 4H`, `BTC 1W`, `BTC 1M`, `SOL 1D`… each with its own sparkline. The\n  change is the current candle's, as on a trading chart.\n- **Crypto**: the top 20 by market cap (stablecoins and wrapped copies left\n  out), then the coins you add; all in the timeframe you pick.\n- **Stocks**: the indices and stocks you follow, in one timeframe.\n- Pick a row for its chart: candles with volume, any timeframe (15m, 1H,\n  4H, 1D, 1W, 1M), the candle under the pointer's open, high, low, close.\n- **Edit** adds symbols (with search), changes timeframes, reorders, and\n  pins up to three to the bar, where they show in turn.\n\n`SUPER + M` opens it (also in the palette). Everything follows the theme.\n\n## Where the data comes from\n\n- Crypto candles: Binance's public market data (`data-api.binance.vision`),\n  no account. A coin of the top 20 that Binance doesn't trade (or no longer\n  does) shows CoinPaprika's price and 24-hour change, without a chart; a\n  coin you add must trade on Binance.\n- The top 20: CoinPaprika (`api.coinpaprika.com`), no account.\n- Stocks: Yahoo Finance (unofficial: it may change), or Twelve Data with a\n  free key (`stock_source = \"twelvedata\"`, `twelvedata_key`: kept in plain\n  text, as any setting; its free plan takes 8 requests a minute, so stocks\n  refresh one every 8 seconds). Yahoo has no 4-hour candles: hourly ones\n  are joined four by four within a day.\n\nPrices are in USD (a stock in another currency shows it). The pinned\nsymbols are fetched every `refresh_seconds`; the rest only while the panel\nis open. Your lists are in `~/.local/state/mazapan-markets/watchlist.json`.\n\nNot investment advice; data can be delayed.\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add markets\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update markets`, or the\nUpdates panel, asking again only for anything new it would be able to do.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-markets\nmazapan plugins dev mazapan-markets     # applied again on every save\nmazapan plugins check mazapan-markets   # every theme, every language, before a release\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\n## License\n\nMIT\n",
+   "added": "2026-10-07T03:59:43+00:00",
+   "updated": "2026-10-07T03:59:43+00:00"
+  },
+  {
+   "id": "pomodoro",
+   "name": "Pomodoro",
+   "description": "Focus in sessions with breaks between them: a ring that fills as the time goes, the sessions of each set, what you're working on, Do Not Disturb while you focus, and today's and the week's focus at a glance",
+   "version": "0.2.0",
+   "author": "rickdev",
+   "homepage": "https://github.com/rick-dev-creator/mazapan-pomodoro",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-pomodoro",
+   "ref": "v0.2.0",
+   "commit": "cc221978e23e3c6ec40bc0883952da265e75bb41",
+   "categories": [
+    "panel",
+    "bar",
+    "tools"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/pomodoro.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/pomodoro/PomodoroService.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/pomodoro/Ring.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/pomodoro/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/pomodoro/settings.json",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/control/sections/35-pomodoro-session.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/pomodoro.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/right/03-pomodoro.qml",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel pomodoro",
+    "runs when you pick it: qs ipc -c mazapan call pomodoro reset",
+    "runs when you pick it: qs ipc -c mazapan call pomodoro skip",
+    "runs when you pick it: qs ipc -c mazapan call pomodoro toggle"
+   ],
+   "settings": 11,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Pomodoro",
+     "description": "Konzentriert in Sitzungen mit Pausen dazwischen: ein Ring, der sich mit der Zeit füllt, die Sitzungen jedes Satzes, woran du arbeitest, Nicht stören beim Fokussieren, und der Fokus von heute und der Woche auf einen Blick"
+    },
+    "es": {
+     "name": "Pomodoro",
+     "description": "Enfócate en sesiones con descansos entre ellas: un anillo que se llena con el tiempo, las sesiones de cada ciclo, en qué estás trabajando, No molestar mientras te enfocas, y el enfoque de hoy y de la semana de un vistazo"
+    },
+    "fr": {
+     "name": "Pomodoro",
+     "description": "Concentrez-vous par sessions, avec des pauses entre elles : un anneau qui se remplit avec le temps, les sessions de chaque cycle, ce sur quoi vous travaillez, Ne pas déranger pendant la concentration, et la concentration du jour et de la semaine en un coup d'œil"
+    },
+    "pt": {
+     "name": "Pomodoro",
+     "description": "Foque em sessões com pausas entre elas: um anel que se enche com o tempo, as sessões de cada ciclo, no que você está trabalhando, Não perturbe enquanto foca, e o foco de hoje e da semana num relance"
+    }
+   },
+   "icon": "media/pomodoro/icon.svg",
+   "screenshots": [
+    "media/pomodoro/screenshot-1.webp"
+   ],
+   "readme": "# Pomodoro\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/pomodoro/).\n\n![A focus session, today and the week (sample data)](media/panel.webp)\n\nFocus in sessions, with breaks between them: 25 minutes of focus, a short\nbreak, again; after four, a long break. Every length is yours to set.\n\n- **The timer**: a ring that fills as the time goes, the time left, when\n  it ends, and the sessions of this set as dots. Start, pause, skip to the\n  next phase, add five minutes, or start over.\n- **What it's for**: write what you're working on; it stays with the\n  timer.\n- **Breaks that follow**: a break starts by itself when a session ends\n  (or waits for you), and the next session waits for you after a break (or\n  starts by itself). A sound and a notice say when each phase ends; the\n  notice starts the next one when it waits.\n- **Do Not Disturb while you focus**: other notifications wait until the\n  session ends; the timer's own still come. A mode you set yourself is left\n  as it is.\n- **Today and the week**: sessions against your daily goal, minutes\n  focused, the streak of days with a session, and the last seven days.\n- **In the bar** a small ring and the time left (a right click starts or\n  pauses); **in the Control Center**, the timer with its buttons.\n\n`SUPER + ALT + P` opens it; in the palette, \"Pomodoro\" starts, pauses,\nskips or starts over. In the panel: space starts and pauses, S skips, R\nstarts over, Esc closes.\n\nThe timer keeps when each phase ends, not a count: a reload of the shell or\na restart picks it up where it was. Sessions and minutes are kept by day in\n`~/.local/state/mazapan/pomodoro.json`, on this computer only.\n\nIts settings are read as they change: changing one doesn't reload the\nshell, and a running session goes on.\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add pomodoro\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update pomodoro`, or the\nUpdates panel, asking again only for anything new it would be able to do.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-pomodoro\nmazapan plugins dev mazapan-pomodoro     # applied again on every save\nmazapan plugins check mazapan-pomodoro   # every theme, every language, before a release\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\n## License\n\nMIT\n",
+   "added": "2026-10-07T03:59:43+00:00",
+   "updated": "2026-10-07T03:59:43+00:00"
+  }
+ ]
+}

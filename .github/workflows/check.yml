@@ -1,0 +1,58 @@
+# A pull request to the registry: every entry it adds or changes looked at,
+# as listing would (its tag and commit, plugins check against every theme and
+# language, what the registry asks), and what each can do said for review.
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths: [plugins.toml, tools/**, .github/**]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Plugins · looked at as listed
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/mazapan
+        with:
+          ref: ${{ vars.MAZAPAN_REF || 'main' }}
+      # Only what the pull request touches (all of them when the tools change).
+      - name: What changed
+        id: changed
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$PWD"
+          base="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [[ -z $base || $base == 0000000000000000000000000000000000000000 ]] || ! git cat-file -e "$base^{commit}" 2>/dev/null \
+             || git diff --name-only "$base" HEAD | grep -qE '^(tools/|\.github/)'; then
+            echo "entries=" >> "$GITHUB_OUTPUT"
+            echo "everything"
+            exit 0
+          fi
+          git show "$base:plugins.toml" > /tmp/before.toml 2>/dev/null || : > /tmp/before.toml
+          entries=$(python - <<'PY'
+          import tomllib
+          before = {e.get("id"): e for e in tomllib.load(open("/tmp/before.toml", "rb")).get("plugin", [])}
+          after = tomllib.load(open("plugins.toml", "rb")).get("plugin", [])
+          print(",".join(e["id"] for e in after if before.get(e.get("id")) != e))
+          PY
+          )
+          echo "entries=${entries:-none}" >> "$GITHUB_OUTPUT"
+          echo "${entries:-nothing listed changed}"
+      - name: Check
+        if: steps.changed.outputs.entries != 'none'
+        shell: bash
+        run: python tools/registry.py check ${{ steps.changed.outputs.entries && format('--entries {0}', steps.changed.outputs.entries) || '' }}

@@ -1,0 +1,41 @@
+# What Mazapan and mazapan.dev read, made again whenever the list changes:
+# generated/index.toml (the catalog), plugins.json and media/ (the gallery).
+name: Publish
+
+on:
+  push:
+    branches: [main]
+    paths: [plugins.toml, tools/**]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: registry-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Generated · catalog and gallery
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/mazapan
+        with:
+          ref: ${{ vars.MAZAPAN_REF || 'main' }}
+      - name: Build
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git pull --quiet --rebase origin main
+          python tools/registry.py build
+      - name: Commit
+        shell: bash
+        run: |
+          git add -A generated
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git -c user.name="mazapan-registry[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit --quiet -m "generated: $(git log -1 --format=%s -- plugins.toml tools)"
+          git push --quiet origin HEAD:main

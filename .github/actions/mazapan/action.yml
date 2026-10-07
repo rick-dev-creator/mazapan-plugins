@@ -1,0 +1,32 @@
+# A mazapan built from source, to check plugins with: MAZAPAN (the binary)
+# and MAZAPAN_ROOT (its checkout: the built-in plugins and themes) set for
+# the steps after it. Runs in an archlinux container, as Mazapan runs on Arch.
+name: mazapan
+description: Build mazapan from source
+inputs:
+  ref:
+    description: The branch, tag or commit of Mazapan to build
+    default: main
+runs:
+  using: composite
+  steps:
+    - name: Tools
+      shell: bash
+      run: pacman -Syu --noconfirm --needed dotnet-sdk clang lld git python sudo >/dev/null
+    - uses: actions/checkout@v4
+      with:
+        repository: rick-dev-creator/mazapan
+        ref: ${{ inputs.ref }}
+        path: .mazapan
+        fetch-depth: 0 # pkg/version reads the tags
+    # Not as root, as Mazapan's own CI builds it.
+    - name: Build
+      shell: bash
+      run: |
+        id builder >/dev/null 2>&1 || useradd -m builder
+        chown -R builder: .mazapan
+        sudo -u builder git config --global --add safe.directory "$PWD/.mazapan"
+        sudo -u builder env DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1 .mazapan/core/build
+        echo "MAZAPAN=$PWD/.mazapan/bin/mazapan" >> "$GITHUB_ENV"
+        echo "MAZAPAN_ROOT=$PWD/.mazapan" >> "$GITHUB_ENV"
+        .mazapan/bin/mazapan --version

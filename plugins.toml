@@ -1,0 +1,18 @@
+# The Mazapan plugin registry: plugins others made, each in its own
+# repository. Each entry is where it lives, the tag of the version listed
+# and that tag's commit: what was looked at is what gets installed.
+#
+# To list yours: a pull request adding an entry (see README.md). Entries
+# are kept in order by id.
+
+[[plugin]]
+id = "markets"
+source = "https://github.com/rick-dev-creator/mazapan-markets"
+ref = "v0.2.0"
+commit = "8389e6db4efdc45e8fd7ed05f577fc7206baca27"
+
+[[plugin]]
+id = "pomodoro"
+source = "https://github.com/rick-dev-creator/mazapan-pomodoro"
+ref = "v0.2.0"
+commit = "cc221978e23e3c6ec40bc0883952da265e75bb41"

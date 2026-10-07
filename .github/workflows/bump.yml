@@ -1,0 +1,71 @@
+# New versions of the plugins listed: a newer vX.Y.Z tag that passes the
+# checks and can do nothing more than the version listed is listed at once
+# (and generated/ made again); one that wants more becomes a pull request,
+# for a person to look at what it would do.
+name: Bump
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: registry-main
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    name: New versions
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/mazapan
+        with:
+          ref: ${{ vars.MAZAPAN_REF || 'main' }}
+      - name: github-cli
+        shell: bash
+        run: pacman -S --noconfirm --needed github-cli >/dev/null
+      - name: Bump
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git config --global user.name "mazapan-registry[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python tools/registry.py bump --summary /tmp/bump.json
+          cat /tmp/bump.json
+          # Listed at once: the list and what's generated from it, together.
+          if ! git diff --quiet plugins.toml; then
+            python tools/registry.py build
+            git add -A plugins.toml generated
+            git commit --quiet -m "$(python -c 'import json; print("New versions: " + ", ".join(json.load(open("/tmp/bump.json"))["listed"]))')"
+            git push --quiet origin HEAD:main
+          fi
+          # Wanting more: a pull request each, unless there's one already.
+          python - <<'PY'
+          import json, subprocess, sys
+          sys.path.insert(0, "tools")
+          import registry
+          for p in json.load(open("/tmp/bump.json"))["proposals"]:
+              branch = f"bump/{p['id']}-{p['ref']}"
+              if subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True).returncode == 0:
+                  print(f"{branch}: already proposed")
+                  continue
+              subprocess.run(["git", "checkout", "--quiet", "-B", branch, "origin/main"], check=True)
+              text = open("plugins.toml").read()
+              open("plugins.toml", "w").write(registry.set_entry(text, p["id"], p["ref"], p["commit"]))
+              subprocess.run(["git", "commit", "--quiet", "-am", f"{p['id']} {p['ref']}: wants to do more"], check=True)
+              subprocess.run(["git", "push", "--quiet", "origin", branch], check=True)
+              body = (f"{p['id']} {p['version']} is out, and it would be able to do more than the version listed:\n\n"
+                      + "".join(f"- {c}\n" for c in p["more"])
+                      + "\nLook at what changed in its repository before merging: people who have it installed are asked "
+                        "to approve this when they update, but listing it is the registry vouching that it's what it says.")
+              subprocess.run(["gh", "pr", "create", "--head", branch, "--base", "main",
+                              "--title", f"{p['id']} {p['ref']}: wants to do more", "--body", body], check=True)
+          PY

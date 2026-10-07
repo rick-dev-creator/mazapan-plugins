@@ -1,0 +1,40 @@
+# For a plugin's own repository: mazapan plugins check on every push and pull
+# request (every theme, every language it has, what the registry asks), and
+# on a version tag, that the tag is plugin.toml's version.
+#
+#   jobs:
+#     check:
+#       uses: rick-dev-creator/mazapan-plugins/.github/workflows/check-plugin.yml@main
+name: Check a plugin
+
+on:
+  workflow_call:
+    inputs:
+      mazapan-ref:
+        description: The branch, tag or commit of Mazapan to check against
+        type: string
+        default: main
+
+jobs:
+  check:
+    name: plugins check
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: plugin
+      - uses: rick-dev-creator/mazapan-plugins/.github/actions/mazapan@main
+        with:
+          ref: ${{ inputs.mazapan-ref }}
+      - name: plugins check
+        shell: bash
+        run: |
+          export HOME="$(mktemp -d)"
+          "$MAZAPAN" plugins check "$PWD/plugin"
+      - name: The tag is the version
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          version=$(python -c 'import tomllib; print(tomllib.load(open("plugin/plugin.toml", "rb"))["plugin"]["version"])')
+          [[ "${GITHUB_REF_NAME}" == "v$version" ]] || { echo "::error::the tag is ${GITHUB_REF_NAME}, plugin.toml says version $version"; exit 1; }
