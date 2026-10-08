@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07T22:57:28+00:00",
+ "generated": "2026-10-08T04:41:00+00:00",
  "plugins": [
   {
    "id": "dock",
@@ -465,6 +465,103 @@
    ],
    "added": "2026-10-07T03:59:43+00:00",
    "updated": "2026-10-07T03:59:43+00:00"
+  },
+  {
+   "id": "ports",
+   "name": "Ports",
+   "description": "What's listening on your computer, by name: your servers with their project, containers, the system's. Is a port free (and the next one that is), stop what holds it for good, and a word when something of yours is open to the network",
+   "version": "0.1.0",
+   "author": "RickDev",
+   "owner": {
+    "id": 81363560,
+    "login": "rick-dev-creator",
+    "name": "RickDev",
+    "bio": "Software Architect with 16+ of experience building enterprise apps.",
+    "company": "",
+    "blog": "",
+    "location": "",
+    "html_url": "https://github.com/rick-dev-creator",
+    "created_at": "2021-03-25T11:39:42Z",
+    "type": "User",
+    "picture": "authors/81363560.jpg"
+   },
+   "repository": "https://github.com/rick-dev-creator/mazapan-ports",
+   "stars": 0,
+   "homepage": "https://github.com/rick-dev-creator/mazapan-ports",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-ports",
+   "ref": "v0.1.0",
+   "commit": "c37ee1cad9dc7d6a3b18f794ab8a5459a7de13f9",
+   "categories": [
+    "panel",
+    "bar",
+    "tools"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/ports.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/ports/PortsService.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/ports/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/ports/settings.json",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/control/now/25-ports-open.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/ports.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/right/06-ports.qml",
+    "full access, code: ~/.local/share/mazapan/bin/ports",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs as a health check: python3 -I ~/.local/share/mazapan/bin/ports list >/dev/null",
+    "runs when you pick it: python3 -I ~/.local/share/mazapan/bin/ports list",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel ports",
+    "needs the package iproute2",
+    "needs the package libnotify",
+    "needs the package python",
+    "needs the package wl-clipboard",
+    "needs the package xdg-utils"
+   ],
+   "settings": 7,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Ports",
+     "description": "Was auf deinem Computer lauscht, mit Namen: deine Server mit ihrem Projekt, Container, die des Systems. Ob ein Port frei ist (und der nächste freie), beenden, was ihn belegt, und ein Hinweis, wenn etwas von dir im Netzwerk offen ist"
+    },
+    "es": {
+     "name": "Puertos",
+     "description": "Lo que escucha en tu computadora, con su nombre: tus servidores con su proyecto, contenedores, los del sistema. Si un puerto está libre (y el siguiente que lo está), detener lo que lo ocupa de verdad, y un aviso cuando algo tuyo queda abierto a la red"
+    },
+    "fr": {
+     "name": "Ports",
+     "description": "Ce qui écoute sur ton ordinateur, par son nom : tes serveurs avec leur projet, les conteneurs, ceux du système. Savoir si un port est libre (et le prochain qui l'est), arrêter ce qui l'occupe pour de bon, et un mot quand quelque chose à toi est ouvert au réseau"
+    },
+    "pt": {
+     "name": "Portas",
+     "description": "O que está escutando no seu computador, pelo nome: seus servidores com o projeto, contêineres, os do sistema. Se uma porta está livre (e a próxima que está), parar de vez o que a ocupa, e um aviso quando algo seu fica aberto para a rede"
+    }
+   },
+   "icon": "media/ports/icon.svg",
+   "screenshots": [
+    "media/ports/screenshot-1.webp",
+    "media/ports/screenshot-2.webp",
+    "media/ports/screenshot-3.webp"
+   ],
+   "readme": "# Ports\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/ports/).\n\n![Your servers with their project, containers, and one open to the network (made-up projects)](media/panel.webp)\n\nEverything listening on your computer, said the way you'd say it:\nnot `node` four times, but **storefront**, **orders-api**, **docs-site**,\neach with the tool it runs (vite, uvicorn, `dotnet watch`…). For the\nmoment a server won't start because \"the port is already in use\", for the\nend of a day with things still running you forgot, and for knowing when\nsomething of yours can be reached by anyone on the café's Wi-Fi.\n\n- **Is a port free?** Type it. \"3000 is free\", or \"3000 is taken by\n  storefront · 3001 is free\", with the free one a click from the\n  clipboard. It's asked the way your server will ask: by trying to listen\n  there, so what holds it without listening (an outgoing connection) counts\n  too, and a port only root may take is said so.\n- **Every listener, by name**, in four groups:\n  - **Yours**: your servers, with their project (the folder they were\n    started from, up to its `.git`, `package.json`, `.csproj`, `Cargo.toml`,\n    `go.mod`, `pyproject.toml`…), the tool, how long they've been up, and\n    what restarts them, if something does.\n  - **Containers**, Podman's (pasta, rootless) and Docker's, by their name\n    and Compose project; [Databases for development](https://github.com/rick-dev-creator/mazapan/tree/main/plugins/dev-databases)'\n    as PostgreSQL, Redis….\n  - **Your services**: systemd sockets of yours, by their unit.\n  - **The system's**: root's and other users', shown with the service its\n    port usually is (`SSH?`), never stopped from here.\n- **How far each one reaches**: *this computer*, *your VPN* (Tailscale,\n  WireGuard), *network · firewall* (on every network, but Mazapan's\n  firewall keeps it closed), or **open to the network**: the firewall is\n  off, or it's Docker, whose published ports go around it.\n- **Stop it, for good.** Asked once (\"Stop?\"), then: your server and what\n  starts it again (`dotnet watch`, `uvicorn --reload`, nodemon, `node\n  --watch`, cargo-watch…; never the terminal you typed it in); a container\n  with `podman stop` or `docker stop`, its data kept; a socket of yours\n  with `systemctl --user stop`. Then the port is looked at: free, still\n  taken (stop again to force it), or back (something you started restarts\n  it: said so).\n- **A word when something opens to the network**: one notification, and a\n  card in the Control Center with Stop right there, while it lasts.\n- **In the bar**: how many servers and containers of yours are listening;\n  red, with a dot that breathes, while one is open to the network. Nothing\n  listening: not in the bar.\n\n![Is 8000 free? Taken by orders-api, 8001 is (made-up projects)](media/free.webp)\n\n`SUPER + ALT + O` opens it (also \"Ports\" in the palette). In the panel,\ntype a port or words; ↑ ↓ move, Enter opens it in the browser, Ctrl+C\ncopies its address, Ctrl+K stops it (Ctrl+K again to confirm; once more,\nif it's still there, to force it), Ctrl+R looks again, Esc clears or\ncloses. A double click opens it too.\n\n![In a light theme (paper)](media/light.webp)\n\n## Settings\n\n| Setting | Default | |\n|---|---|---|\n| `key` | `SUPER + ALT + O` | Opens Ports |\n| `bar` | on | In the bar while something of yours listens |\n| `warn` | on | The notification and the Control Center's card |\n| `system` | on | The system's listeners, below yours |\n| `udp` | off | UDP listeners too |\n| `hidden` | 53, 631, 5353, 5355 | Ports never listed (DNS, printing, the network's name service) |\n| `every` | 10 | Seconds between looks with the panel closed (open: 2.5) |\n\n## What it reaches and why\n\n- **The kernel's socket tables** (`/proc/net/tcp`, `tcp6`, and `udp` when\n  asked) and **your own processes** in `/proc`: their name, command,\n  folder, parent and start time. Other users' processes can't be seen\n  without root, and aren't: their sockets are listed by port alone.\n- **Podman** (`podman ps`) and **Docker** (`docker ps`, only if you can\n  reach its socket), to tell which container a published port is;\n  **systemd** (`systemctl --user list-sockets`), for your units; **ip**,\n  for which addresses are a VPN's; whether **ufw** is active.\n- **What it stops**: only what's yours. A process is signalled through a\n  pidfd opened first and checked to be the same process (yours, started\n  when it was), so a reused pid can't be hit. Shells, terminals and your\n  session are never signalled.\n- **What it runs**: its helper, `~/.local/share/mazapan/bin/ports`\n  (`python3 -I`, only Python's own library), every 10 seconds while the\n  bar or the warning is on (every 2.5 while the panel is open); `notify-send`\n  for the warning; `xdg-open` and `wl-copy` when you open or copy.\n- **Nothing leaves your computer**: no network requests, nothing kept but\n  its settings.\n- **Files it writes**: its part of the shell (`components/ports/`, the\n  bar's widget, the panel, the Control Center's card), its key in\n  Hyprland, and its settings, read as they change.\n\nFrom a terminal:\n\n```sh\npython3 -I ~/.local/share/mazapan/bin/ports list          # every listener, as JSON\npython3 -I ~/.local/share/mazapan/bin/ports check 3000    # free? who holds it, the next free one\npython3 -I ~/.local/share/mazapan/bin/ports stop 3000     # stop what holds it (--force: SIGKILL)\n```\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add ports\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update ports`, or the\nUpdates panel, asking again only for anything new it would be able to do.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-ports\nmazapan plugins dev mazapan-ports     # applied again on every save\nmazapan plugins check mazapan-ports   # every theme, every language, before a release\npython3 -m unittest discover -s mazapan-ports/tests   # the helper's tests\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\nIdeas from Omarchy's port plugins ([omarchy-ports](https://github.com/RohitKaushal7/omarchy-ports),\n[Harbor](https://github.com/ki11e6/omarchy-harbor), [Portkiller](https://github.com/R1T1KKUMAR/omarchy-portkiller),\n[Portside](https://github.com/Saikomantisu/omarchy-portside)); the code is this plugin's own.\n\n## License\n\nMIT\n",
+   "pictures": [
+    "media/icon.svg",
+    "media/panel.webp",
+    "media/free.webp",
+    "media/light.webp"
+   ],
+   "added": "2026-10-08T04:41:00+00:00",
+   "updated": "2026-10-08T04:41:00+00:00"
   },
   {
    "id": "radio",

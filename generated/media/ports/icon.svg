@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2230"/><stop offset="1" stop-color="#11141b"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d38a"/><stop offset="1" stop-color="#c9a15b"/></linearGradient>
+<linearGradient id="face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3142"/><stop offset="1" stop-color="#1a1f2b"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".62" r=".5"><stop offset="0" stop-color="#c9a15b" stop-opacity=".42"/><stop offset="1" stop-color="#c9a15b" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="40" height="40" rx="7" fill="url(#bg)"/>
+<rect width="40" height="40" rx="7" fill="url(#glow)"/>
+<rect x=".5" y=".5" width="39" height="39" rx="6.5" fill="none" stroke="#ffffff" stroke-opacity=".1"/>
+<!-- the cable, coming down into the lit port -->
+<path d="M20 4.5 C20 9 26 9 26 12.5 C26 15 20 14.5 20 17.6" fill="none" stroke="url(#gold)" stroke-width="1.9" stroke-linecap="round"/>
+<rect x="17.4" y="17" width="5.2" height="4.2" rx="1" fill="url(#gold)"/>
+<!-- the panel, three ports -->
+<rect x="5.5" y="21" width="29" height="12.5" rx="2.6" fill="url(#face)" stroke="#ffffff" stroke-opacity=".14"/>
+<g fill="#0d1016" stroke="#ffffff" stroke-opacity=".18" stroke-width=".6">
+<path d="M8.6 24.2h5.6v4.4h-1.1v1.4h-3.4v-1.4h-1.1z"/>
+<path d="M25.8 24.2h5.6v4.4h-1.1v1.4h-3.4v-1.4h-1.1z"/>
+</g>
+<path d="M17.2 24.2h5.6v4.4h-1.1v1.4h-3.4v-1.4h-1.1z" fill="url(#gold)"/>
+<!-- their lights: one lit -->
+<circle cx="11.4" cy="31.6" r=".75" fill="#e8e2d4" fill-opacity=".25"/>
+<circle cx="20" cy="31.6" r=".9" fill="#f3d38a"/>
+<circle cx="28.6" cy="31.6" r=".75" fill="#e8e2d4" fill-opacity=".25"/>
+<circle cx="20" cy="31.6" r="2.2" fill="#f3d38a" fill-opacity=".18"/>
+</svg>
