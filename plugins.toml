@@ -36,6 +36,12 @@ ref = "v0.2.0"
 commit = "cc221978e23e3c6ec40bc0883952da265e75bb41"
 
 [[plugin]]
+id = "ports"
+source = "https://github.com/rick-dev-creator/mazapan-ports"
+ref = "v0.1.0"
+commit = "c37ee1cad9dc7d6a3b18f794ab8a5459a7de13f9"
+
+[[plugin]]
 id = "radio"
 source = "https://github.com/rick-dev-creator/mazapan-radio"
 ref = "v0.1.3"
