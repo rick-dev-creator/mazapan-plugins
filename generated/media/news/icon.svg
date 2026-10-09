@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2230"/><stop offset="1" stop-color="#11141b"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d38a"/><stop offset="1" stop-color="#c9a15b"/></linearGradient>
+<linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3142"/><stop offset="1" stop-color="#1a1f2b"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".45" r=".55"><stop offset="0" stop-color="#c9a15b" stop-opacity=".32"/><stop offset="1" stop-color="#c9a15b" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="40" height="40" rx="7" fill="url(#bg)"/>
+<rect width="40" height="40" rx="7" fill="url(#glow)"/>
+<rect x=".5" y=".5" width="39" height="39" rx="6.5" fill="none" stroke="#ffffff" stroke-opacity=".1"/>
+<!-- the page, folded at its back -->
+<path d="M28.5 12.5h3.2a1.6 1.6 0 0 1 1.6 1.6v14.6a2.8 2.8 0 0 1-5.6 0z" fill="#0d1016" stroke="#ffffff" stroke-opacity=".16" stroke-width=".6"/>
+<rect x="7" y="8.5" width="22.6" height="23" rx="2.4" fill="url(#paper)" stroke="#ffffff" stroke-opacity=".16" stroke-width=".7"/>
+<!-- the headline, lit; the columns below -->
+<rect x="10.2" y="12" width="16.2" height="3.4" rx="1" fill="url(#gold)"/>
+<rect x="10.2" y="18.4" width="6.6" height="6.2" rx="1" fill="#e8e2d4" fill-opacity=".22"/>
+<g stroke="#e8e2d4" stroke-opacity=".55" stroke-width="1.2" stroke-linecap="round">
+<path d="M19.4 19.2h7"/><path d="M19.4 22h7"/><path d="M19.4 24.8h5"/>
+<path d="M10.2 28h16.2" stroke-opacity=".3"/>
+</g>
+<!-- something new -->
+<circle cx="31.4" cy="8.6" r="2.6" fill="#f3d38a"/>
+<circle cx="31.4" cy="8.6" r="4.6" fill="#f3d38a" fill-opacity=".16"/>
+</svg>

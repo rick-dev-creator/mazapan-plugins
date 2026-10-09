@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-08T04:41:00+00:00",
+ "generated": "2026-10-09T03:48:55+00:00",
  "plugins": [
   {
    "id": "dock",
@@ -173,6 +173,98 @@
    ],
    "added": "2026-10-07T03:59:43+00:00",
    "updated": "2026-10-07T03:59:43+00:00"
+  },
+  {
+   "id": "news",
+   "name": "News",
+   "description": "The news from where you're from and where you live, in the languages you read: Google News' editions by country and language, its sections (science, entertainment…) and your own topics (AI, crypto…), in a quiet icon in the bar and a panel made for reading",
+   "version": "0.1.0",
+   "author": "RickDev",
+   "owner": {
+    "id": 81363560,
+    "login": "rick-dev-creator",
+    "name": "RickDev",
+    "bio": "Software Architect with 16+ of experience building enterprise apps.",
+    "company": "",
+    "blog": "",
+    "location": "",
+    "html_url": "https://github.com/rick-dev-creator",
+    "created_at": "2021-03-25T11:39:42Z",
+    "type": "User",
+    "picture": "authors/81363560.jpg"
+   },
+   "repository": "https://github.com/rick-dev-creator/mazapan-news",
+   "stars": 0,
+   "homepage": "https://github.com/rick-dev-creator/mazapan-news",
+   "license": "MIT",
+   "source": "https://github.com/rick-dev-creator/mazapan-news",
+   "ref": "v0.1.0",
+   "commit": "573219523adfa1226c28291b717916cceed8e9c7",
+   "categories": [
+    "panel",
+    "bar"
+   ],
+   "requires": [
+    "shell-bar",
+    "hypr-base"
+   ],
+   "capabilities": [
+    "full access, code in Hyprland (Lua): ~/.config/hypr/mazapan/news.lua",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/news/NewsService.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/news/qmldir",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/components/news/settings.json",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/panels/news.qml",
+    "full access, code in the shell (QML): ~/.config/quickshell/mazapan/widgets/right/44-news.qml",
+    "full access, code: ~/.local/share/mazapan/bin/news",
+    "runs after writing: hyprctl reload >/dev/null",
+    "runs after writing: sh ~/.local/share/mazapan/bin/shell-reload",
+    "runs as a health check: python3 -I ~/.local/share/mazapan/bin/news editions >/dev/null",
+    "runs when you pick it: qs ipc -c mazapan call mazapan panel news",
+    "runs when you pick it: qs ipc -c mazapan call news refresh",
+    "needs the package python",
+    "needs the package xdg-utils"
+   ],
+   "settings": 5,
+   "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "pt"
+   ],
+   "translations": {
+    "de": {
+     "name": "Nachrichten",
+     "description": "Nachrichten von dort, wo du herkommst, und dort, wo du lebst, in den Sprachen, die du liest: die Ausgaben von Google News nach Land und Sprache, ihre Rubriken (Wissenschaft, Unterhaltung…) und eigene Themen (KI, Krypto…), als dezentes Symbol in der Leiste und ein Panel zum Lesen"
+    },
+    "es": {
+     "name": "Noticias",
+     "description": "Las noticias de donde eres y de donde vives, en los idiomas que lees: las ediciones de Google News por país e idioma, sus secciones (ciencia, espectáculos…) y tus propios temas (IA, crypto…), en un icono discreto en la barra y un panel hecho para leer"
+    },
+    "fr": {
+     "name": "Actualités",
+     "description": "Les actualités d'où vous venez et d'où vous vivez, dans les langues que vous lisez : les éditions de Google Actualités par pays et par langue, leurs rubriques (sciences, divertissement…) et vos propres sujets (IA, crypto…), dans une icône discrète de la barre et un panneau fait pour lire"
+    },
+    "pt": {
+     "name": "Notícias",
+     "description": "As notícias de onde você é e de onde você mora, nos idiomas que você lê: as edições do Google Notícias por país e idioma, suas seções (ciência, entretenimento…) e seus próprios temas (IA, cripto…), num ícone discreto na barra e num painel feito para ler"
+    }
+   },
+   "icon": "media/news/icon.svg",
+   "screenshots": [
+    "media/news/screenshot-1.webp",
+    "media/news/screenshot-2.webp",
+    "media/news/screenshot-3.webp"
+   ],
+   "readme": "# News\n\nA plugin for [Mazapan](https://mazapan.dev), listed in its [plugin registry](https://mazapan.dev/plugins/news/).\n\nThe news from where you're from and where you live, in the languages you\nread. From Mexico and living in Japan: Mexico's national news and science\nin Spanish, Japan's front page in Japanese, and AI and crypto from the US\nin English, all in one place. Quiet until you want it: an icon in the bar,\na panel made for reading when you open it, and nothing else. No\nnotifications, nothing in the Control Center.\n\n![Mexico's news in Spanish and the US's AI and crypto in English, together](media/panel.webp)\n\n- **Editions by country and language**: every edition Google News has,\n  80-odd, each a country in one of its languages (Mexico · Español, Canada\n  · English or Français, India in seven languages, Japan · 日本語). A\n  country in a language Google doesn't have (Japan in English) isn't one,\n  so it isn't offered.\n- **Its sections**, in that edition's language: Top stories, National,\n  World, Business, Technology, Science, Health, Entertainment, Sports.\n- **Your own topics**: any words, looked for in that edition over the last\n  two days (AI, bitcoin, video games, inteligencia artificial…), with a\n  few suggested in its language.\n- **Up to 12 sources**, from as many countries as you like. Your country's\n  front page until you pick yours (from the desktop's language: `es_MX`\n  is Mexico in Spanish).\n- **Made for reading**: each headline whole, in the reading font, never\n  cut to one line; its newspaper and how long ago below it. What came since\n  you last looked goes first, marked. Your sources are filters on top:\n  all of them together, or one. A click, or Enter, opens it in the browser.\n- **In the bar**: only its icon, with a dot when there's news since you\n  last looked. A right click looks for news now.\n- **It keeps what it got**: the panel opens at once with what came last,\n  also without internet; it looks again every 30 minutes, and as soon as\n  the internet is back. A source that can't be reached keeps its last\n  headlines, and says so.\n\n`SUPER + ALT + E` opens it (also \"News\" in the palette). ↑ ↓ (or j k)\nmove, ← → (or Tab) change the source, Enter opens the headline, Ctrl+R\nlooks for news now, Ctrl+S opens your sources, Esc closes.\n\n![Your sources: Japan picked, its sections in Japanese a tap away](media/sources.webp)\n\nYour sources: ⚙ in the panel (or Ctrl+S). Type a country or a language,\npick it, then tap what you want from it: each section is added with a tap\nand taken away with another; a topic of your own is typed and added with\nEnter. ✕ takes a source away.\n\n![In a light theme (paper)](media/light.webp)\n\n## Settings\n\n| Setting | Default | |\n|---|---|---|\n| `key` | `SUPER + ALT + E` | Opens the news |\n| `bar` | on | Its icon in the bar |\n| `dot` | on | A dot on the icon when there's news since you last looked |\n| `every` | 30 | Minutes between looks for news (10 to 240) |\n| `per_source` | 20 | Headlines from each source (5 to 50) |\n\nYour sources aren't settings: they're picked in the panel.\n\n## What it reaches and why\n\n- **news.google.com**, and nothing else: one RSS feed per source, asked\n  over https only (a redirect elsewhere is refused), for 10 seconds and\n  1 MB at most, every 30 minutes and when you ask. What's sent is what any\n  feed reader sends: the edition, the section or your words. No account,\n  no identifier, no cookies.\n- **What it reads from a feed**: each headline's title, newspaper, link and\n  time. A feed with a DTD is refused (no entities, nothing loaded from\n  elsewhere); links that aren't https are left out.\n- **What it opens**: the headline's link, in your browser, with `xdg-open`\n  (Google News' link, which takes you to the newspaper's page).\n- **Files it keeps**: `~/.local/state/mazapan/news/` (your sources, the\n  last headlines, when you last looked).\n- **Files it writes**: its part of the shell (`components/news/`, the\n  bar's icon, the panel), its key in Hyprland, its helper\n  (`~/.local/share/mazapan/bin/news`, `python3 -I`, only Python's own\n  library), and its settings, read as they change.\n\nFrom a terminal:\n\n```sh\npython3 -I ~/.local/share/mazapan/bin/news show        # what came last, as JSON\npython3 -I ~/.local/share/mazapan/bin/news fetch       # look for news now\npython3 -I ~/.local/share/mazapan/bin/news sources     # your sources\npython3 -I ~/.local/share/mazapan/bin/news editions    # every edition there is\n```\n\n## Install\n\nIn Mazapan, the Plugins panel (`SUPER + SHIFT + P`) lists it under the\ncommunity's: its page shows what it can do before you install it. Or:\n\n```sh\nmazapan plugins add news\nmazapan apply\n```\n\nUpdates come through the registry: `mazapan plugins update news`, or the\nUpdates panel, asking again only for anything new it would be able to do.\n\n## Develop\n\n```sh\ngit clone https://github.com/rick-dev-creator/mazapan-news\nmazapan plugins dev mazapan-news     # applied again on every save\nmazapan plugins check mazapan-news   # every theme, every language, before a release\npython3 -m unittest discover -s mazapan-news/tests   # the helper's tests\n```\n\nA release is a tag, `vX.Y.Z`, the same as `version` in plugin.toml; the\nregistry lists it once it passes its checks.\n\nThe idea comes from Omarchy's [Omanews](https://github.com/brianblakely/omanews)\n(a headline ticker for the bar); the code is this plugin's own.\n\n## License\n\nMIT\n",
+   "pictures": [
+    "media/icon.svg",
+    "media/panel.webp",
+    "media/sources.webp",
+    "media/light.webp"
+   ],
+   "added": "2026-10-09T03:48:55+00:00",
+   "updated": "2026-10-09T03:48:55+00:00"
   },
   {
    "id": "now-playing",
