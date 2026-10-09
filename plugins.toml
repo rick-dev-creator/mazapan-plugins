@@ -18,6 +18,12 @@ ref = "v0.2.0"
 commit = "8389e6db4efdc45e8fd7ed05f577fc7206baca27"
 
 [[plugin]]
+id = "news"
+source = "https://github.com/rick-dev-creator/mazapan-news"
+ref = "v0.1.0"
+commit = "573219523adfa1226c28291b717916cceed8e9c7"
+
+[[plugin]]
 id = "now-playing"
 source = "https://github.com/rick-dev-creator/mazapan-now-playing"
 ref = "v0.1.2"
